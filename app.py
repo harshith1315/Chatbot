@@ -1,11 +1,11 @@
 import openai 
-import key
+import secrets
 import streamlit as st
 from streamlit_chat import message
 
 st.set_page_config(page_title="KH-CHATBOT", page_icon = 'screenshot (2).png')
 
-openai.api_key = key.key
+openai.api_key = st.secrets['key']
 
 st.title("CHATGPT INTEGRATED CHATBOT",anchor="str")
 try:
