@@ -41,4 +41,4 @@ try:
             message(st.session_state['past'][i], is_user=True,avatar_style="adventurer", key=str(i) + '_user')
             message(st.session_state["generated"][i], key=str(i))
 except:
-    message("SERVERS ARE BUSY",avatar_style="adventurer")       
+    message("SERVERS ARE BUSY",is_user=True)       
