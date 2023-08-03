@@ -35,7 +35,7 @@ try:
         st.session_state.past.append(user_input)
         st.session_state.generated.append(output)
     if st.session_state['generated']:
-        for i in range(1, len(st.session_state['generated'])):
+        for i in range(0, len(st.session_state['generated'])):
             message(st.session_state['past'][i], is_user=True,avatar_style="adventurer", key=str(i) + '_user')
             message(st.session_state["generated"][i], key=str(i))
 except:
