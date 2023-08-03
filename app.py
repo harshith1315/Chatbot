@@ -28,8 +28,6 @@ try:
         st.session_state['past'] = []
     def get_text():
         prompt=st.chat_input(placeholder="send a message",key=str)
-        if prompt==None:
-            prompt="hello"
         return prompt
     user_input = get_text()
     if user_input:
