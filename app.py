@@ -38,6 +38,6 @@ try:
     if st.session_state['generated']:
         for i in range(0, len(st.session_state['generated'])):
             message(st.session_state['past'][i], is_user=True,avatar_style="adventurer", key=f'{i} + _user')
-            message(st.session_state["generated"][i],key=i,allow_html=True,is_table=True if st.session_state['generated'][i]['type']=='table' else False)
+            message(st.session_state["generated"][i],key=i)
 except:
     message("SERVERS ARE BUSY")  
