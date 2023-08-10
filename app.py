@@ -1,8 +1,9 @@
 import openai
 import streamlit as st
 
-st.title("CHATGPT INTEGRATED CHATBOT",anchor="str")
 st.set_page_config(page_title="KH-CHATBOT", page_icon = 'screenshot (2).png')
+st.title("CHATGPT INTEGRATED CHATBOT",anchor="str")
+
 openai.api_key = st.secrets["key"]
 try:
     if "openai_model" not in st.session_state:
