@@ -33,7 +33,7 @@ try:
     if user_input:
         output = generate_response(user_input)
         st.session_state.past.append(user_input)
-        st.session_state.generated.append(output)
+        st.session_state.generated.append(st.code(output)) 
     if st.session_state['generated']:
         for i in range(0, len(st.session_state['generated'])):
             message(st.session_state['past'][i], is_user=True,avatar_style="adventurer", key=str(i) + '_user')
