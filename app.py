@@ -37,6 +37,6 @@ try:
     if st.session_state['generated']:
         for i in range(0, len(st.session_state['generated'])):
             message(st.session_state['past'][i], is_user=True,avatar_style="adventurer")# +'_user')
-            st.chat_message(name="assistant",st.session_state["generated"][i])
+            st.chat_message(name="assistant",st.session_state["generated"][i], avatar=None) 
 except:
     message("SERVERS ARE BUSY",is_user=False)       
