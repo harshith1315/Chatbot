@@ -27,7 +27,7 @@ try:
     if 'past' not in st.session_state:
         st.session_state['past'] = []
     def get_text():
-        prompt=st.chat_input(placeholder="send a message",key=str)
+        prompt=st.chat_input(placeholder="send a message",key="user_input")
         return prompt
     user_input = get_text()
     if user_input:
