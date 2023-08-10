@@ -2,6 +2,7 @@ import openai
 import secrets
 import streamlit as st
 from streamlit_chat import message
+from streamlit_chat import message as st_message
 
 st.set_page_config(page_title="KH-CHATBOT", page_icon = 'screenshot (2).png')
 openai.api_key = st.secrets["key"]
