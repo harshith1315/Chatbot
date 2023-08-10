@@ -18,8 +18,8 @@ try:
             stop = None,
             temperature=0.5,
         )
-        message = completions.choices[0].text
-        return message 
+        m = completions.choices[0].text
+        return m
 
 
     if 'generated' not in st.session_state:
@@ -37,6 +37,6 @@ try:
     if st.session_state['generated']:
         for i in range(0, len(st.session_state['generated'])):
             message(st.session_state['past'][i], is_user=True,avatar_style="adventurer")# +'_user')
-            message(st.write (st.session_state["generated"][i])) 
+            message(st.session_state["generated"][i])
 except:
     message("SERVERS ARE BUSY",is_user=False)       
