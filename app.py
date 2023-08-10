@@ -18,7 +18,7 @@ try:
             stop = None,
             temperature=0.5,
         )
-        message = completions.choices[0].delta.get("") 
+        message = completions.choices[0].text
         return message 
 
 
