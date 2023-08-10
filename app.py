@@ -1,10 +1,12 @@
-import openai
+import openai 
+import secrets
 import streamlit as st
+from streamlit_chat import message
+
 st.set_page_config(page_title="KH-CHATBOT", page_icon = 'screenshot (2).png')
-
-
-st.title("CHATGPT INTEGRATED CHATBOT",anchor="str")
 openai.api_key = st.secrets["key"]
+st.title("CHATGPT INTEGRATED CHATBOT",anchor="str")
+
 try:
     if "openai_model" not in st.session_state:
         st.session_state["openai_model"] = "text-davinci-003"
@@ -37,4 +39,4 @@ try:
             message_placeholder.markdown(full_response)
         st.session_state.messages.append({"role": "assistant", "content": full_response})
 except:
-    message("SERVERS ARE BUSY")  
+    message("SERVERS ARE BUSY")
