@@ -2,9 +2,9 @@ import openai
 import secrets
 import streamlit as st
 
-st.set_page_config(page_title="KH-CHATBOT", page_icon = 'screenshot (2).png')
+st.set_page_config(page_title="KH-CHATBOT", page_icon='screenshot (2).png')
 openai.api_key = st.secrets["key"]
-st.title("CHATGPT INTEGRATED CHATBOT",anchor="str")
+st.title("CHATGPT INTEGRATED CHATBOT", anchor="str")
 
 try:
     if "openai_model" not in st.session_state:
@@ -26,16 +26,16 @@ try:
             message_placeholder = st.empty()
             full_response = ""
             for response in openai.ChatCompletion.create(
-                model=st.session_state["openai_model"],
-                messages=[
-                    {"role": m["role"], "content": m["content"]}
-                    for m in st.session_state.messages
-                ],
-                stream=True,
+                    model=st.session_state["openai_model"],
+                    messages=[
+                        {"role": m["role"], "content": m["content"]}
+                        for m in st.session_state.messages
+                    ],
+                    stream=True,
             ):
                 full_response += response.choices[0].delta.get("content", "")
                 message_placeholder.markdown(full_response + "▌")
             message_placeholder.markdown(full_response)
         st.session_state.messages.append({"role": "assistant", "content": full_response})
 except:
-    st.chat_message("SERVERS ARE BUSY")
+    st.markdown("SERVERS ARE BUSY")
