@@ -1,43 +1,39 @@
-import openai 
-import secrets
+import openai
 import streamlit as st
-from streamlit_chat import message
-from streamlit.components.v1 import html
-
-st.set_page_config(page_title="KH-CHATBOT", page_icon = 'screenshot (2).png')
-
-openai.api_key = st.secrets['key']
 
 st.title("CHATGPT INTEGRATED CHATBOT",anchor="str")
+st.set_page_config(page_title="KH-CHATBOT", page_icon = 'screenshot (2).png')
+openai.api_key = st.secrets["key"]
 try:
-    def generate_response(prompt):
-        completions = openai.Completion.create(
-            engine = "gpt-3.5-turbo",
-            prompt = prompt,
-            max_tokens = 1000,
-            n = 1,
-            stop = None,
-            temperature=0.5,
-        )
-        m = completions.choices[0].text
-        return m
+    if "openai_model" not in st.session_state:
+        st.session_state["openai_model"] = "text-davinci-003"
 
-    if 'generated' not in st.session_state:
-        st.session_state['generated'] = []
-    if 'past' not in st.session_state:
-        st.session_state['past'] = []
-    def get_text():
-        prompt=st.chat_input(placeholder="send a message",key=str)
-        return prompt
-    user_input = get_text()
-    if user_input:
-        output = generate_response(user_input)
-        st.session_state.past.append(user_input)
-        st.session_state.generated.append(output)
+    if "messages" not in st.session_state:
+        st.session_state.messages = []
 
-    if st.session_state['generated']:
-        for i in range(0, len(st.session_state['generated'])):
-            message(st.session_state['past'][i], is_user=True,avatar_style="adventurer", key=f'{i} + _user')
-            message(st.session_state["generated"][i],key=i)
+    for message in st.session_state.messages:
+        with st.chat_message(message["role"]):
+            st.markdown(message["content"])
+
+    if prompt := st.chat_input("What is up?"):
+        st.session_state.messages.append({"role": "user", "content": prompt})
+        with st.chat_message("user"):
+            st.markdown(prompt)
+
+        with st.chat_message("assistant"):
+            message_placeholder = st.empty()
+            full_response = ""
+            for response in openai.ChatCompletion.create(
+                model=st.session_state["openai_model"],
+                messages=[
+                    {"role": m["role"], "content": m["content"]}
+                    for m in st.session_state.messages
+                ],
+                stream=True,
+            ):
+                full_response += response.choices[0].delta.get("content", "")
+                message_placeholder.markdown(full_response + "▌")
+            message_placeholder.markdown(full_response)
+        st.session_state.messages.append({"role": "assistant", "content": full_response})
 except:
     message("SERVERS ARE BUSY")  
