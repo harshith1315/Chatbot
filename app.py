@@ -2,6 +2,7 @@ import openai
 import secrets
 import streamlit as st
 from streamlit_chat import message
+from streamlit.components.v1 import html
 
 st.set_page_config(page_title="KH-CHATBOT", page_icon = 'screenshot (2).png')
 
@@ -13,7 +14,7 @@ try:
         completions = openai.Completion.create(
             engine = "text-davinci-003",
             prompt = prompt,
-            max_tokens = 500,
+            max_tokens = 1000,
             n = 1,
             stop = None,
             temperature=0.5,
@@ -21,22 +22,23 @@ try:
         m = completions.choices[0].text
         return m
 
-
     if 'generated' not in st.session_state:
         st.session_state['generated'] = []
     if 'past' not in st.session_state:
         st.session_state['past'] = []
     def get_text():
-        prompt=st.chat_input(placeholder="send a message",key="user_input")
+        prompt=st.chat_input(placeholder="send a message",key=str)
         return prompt
     user_input = get_text()
     if user_input:
         output = generate_response(user_input)
         st.session_state.past.append(user_input)
         st.session_state.generated.append(output)
-    if st.session_state['generated']:
-        for i in range(0, len(st.session_state['generated'])):
-            message(st.session_state['past'][i], is_user=True,avatar_style="adventurer")# +'_user')
-            message(st.session_state["generated"][i]) 
+    chat_placeholder = st.empty()
+    with chat_placeholder.container():
+        if st.session_state['generated']:
+            for i in range(0, len(st.session_state['generated'])):
+                message(st.session_state['past'][i], is_user=True,avatar_style="adventurer", key=f'{i} + _user')
+                message(st.session_state["generated"][i],key=i,allow_html=True,is_table=True if st.session_state['generated'][i]['type']=='table' else False)
 except:
-    message("SERVERS ARE BUSY",is_user=False)       
+    message("SERVERS ARE BUSY")  
