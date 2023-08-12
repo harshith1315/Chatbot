@@ -37,4 +37,4 @@ try:
             message_placeholder.markdown(full_response)
         st.session_state.messages.append({"role": "assistant", "content": full_response})
 except:
-    st.markdown("SERVERS ARE BUSY")
+    message_placeholder.markdown("SERVERS ARE BUSY")
